@@ -1,4 +1,3 @@
-# qabot.
 QA bot to review your tickets
 
 [![EO principles respected here](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org)
