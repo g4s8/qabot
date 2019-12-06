@@ -11,6 +11,7 @@ jobs:
         name: registry.heroku.com/zqabot/web
         username: _
         password: ${{ secrets.HEROKU_DOCKER_TOKEN }}
+        registry: registry.heroku.com
     - name: GitHub Action for Heroku
       uses: actions/heroku@1.0.0
       env:
