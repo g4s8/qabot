@@ -3,6 +3,7 @@ package wtf.g4s8.qabot;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.Text;
+import org.cactoos.text.UncheckedText;
 
 /**
  *
@@ -38,5 +39,10 @@ public final class Quality implements Text {
     @Override
     public String asString() {
         return this.quality.get().name().toLowerCase(Locale.US);
+    }
+
+    @Override
+    public String toString() {
+        return new UncheckedText(this).asString();
     }
 }
