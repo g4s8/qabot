@@ -12,8 +12,8 @@ import com.jcabi.github.Search;
 import com.jcabi.github.Users;
 import com.jcabi.http.Request;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import javax.json.JsonObject;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.Solid;
@@ -28,12 +28,12 @@ public final class GithubFrom implements Github {
     private final Scalar<Github> origin;
 
     public GithubFrom() {
-        this(System.getProperties());
+        this(System.getenv());
     }
 
-    public GithubFrom(final Properties props) {
+    public GithubFrom(final Map<String, String> env) {
         this.origin = new Solid<>(
-            () -> new RtGithub(Objects.requireNonNull(props.getProperty("ghtoken")))
+            () -> new RtGithub(Objects.requireNonNull(env.get("GH_TOKEN")))
         );
     }
 
