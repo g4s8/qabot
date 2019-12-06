@@ -10,4 +10,4 @@ FROM g4s8/jre-11:alpine3.10
 WORKDIR /app
 COPY --from=build /build/target/qabot-jar-with-dependencies.jar /app/qabot.jar
 ENTRYPOINT []
-CMD java -jar qabot.jar -Dfile.encoding=UTF-8 --port=${PORT}
+CMD java -jar qabot.jar --port=${PORT}
