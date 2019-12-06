@@ -8,7 +8,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: registry.heroku.com/zqabot
+        name: registry.heroku.com/zqabot/web
         username: _
         password: ${{ secrets.HEROKU_DOCKER_TOKEN }}
     - name: GitHub Action for Heroku
