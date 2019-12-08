@@ -1,24 +1,39 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 g4s8
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files
+ * (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights * to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package wtf.g4s8.qabot.tk;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import org.cactoos.Text;
-import org.cactoos.text.UncheckedText;
 import org.takes.Request;
 import org.takes.Response;
 import org.takes.Take;
 import org.takes.rs.RsWithStatus;
-import wtf.g4s8.qabot.GithubFrom;
-import wtf.g4s8.qabot.Reviews;
 import wtf.g4s8.qabot.Ticket;
 import wtf.g4s8.qabot.Tickets;
-import wtf.g4s8.qabot.VerdictFor;
 import wtf.g4s8.qabot.misc.JsonText;
 
 /**
@@ -27,24 +42,17 @@ import wtf.g4s8.qabot.misc.JsonText;
  */
 public final class TkNewTicket implements Take {
 
-    private static final Executor EXEC =
-        Executors.newCachedThreadPool();
-
     /**
      * Tickets.
      */
     private final Tickets tkts;
 
-    private final Reviews reviews;
-
     /**
      * Ctor.
      * @param tkts Tickets
-     * @param reviews
      */
-    public TkNewTicket(final Tickets tkts, final Reviews reviews) {
+    public TkNewTicket(final Tickets tkts) {
         this.tkts = tkts;
-        this.reviews = reviews;
     }
 
     @Override

@@ -1,3 +1,28 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2019 g4s8
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files
+ * (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights * to use, copy, modify,
+ * merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package wtf.g4s8.qabot;
 
 import com.jcabi.log.Logger;
@@ -11,15 +36,26 @@ import org.takes.http.FtCli;
 import wtf.g4s8.qabot.tk.TkApp;
 
 /**
- *
- * @since
+ * Entry point.
+ * @since 1.0
  */
 public final class Main implements Runnable {
 
+    /**
+     * CLI arguments.
+     */
     private final List<String> args;
+
+    /**
+     * Tickets.
+     */
     private final Tickets tks;
 
-
+    /**
+     * Ctor.
+     * @param args Arguments
+     * @param tickets Tickets
+     */
     private Main(final List<String> args, final Tickets tickets) {
         this.args = Collections.unmodifiableList(args);
         this.tks = tickets;
@@ -29,7 +65,7 @@ public final class Main implements Runnable {
     public void run() {
         try {
             new FtCli(
-                new TkApp(new TksValid(this.tks), new Reviews()),
+                new TkApp(new TksValid(this.tks)),
                 this.args
             ).start(Exit.NEVER);
         } catch (final IOException err) {
@@ -37,7 +73,11 @@ public final class Main implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
+    /**
+     * Main func.
+     * @param args Arguments
+     */
+    public static void main(final String[] args) {
         final Tickets.Simple tickets = new Tickets.Simple();
 
         final var thread = new Thread(new Main(new ListOf<>(args), tickets));
@@ -50,7 +90,11 @@ public final class Main implements Runnable {
         notifications.setName("notifications[d]");
         notifications.setDaemon(true);
         notifications.setPriority(Thread.NORM_PRIORITY);
-//        notifications.start();
+        // @todo #1:30min Implement notifications daemon
+        //  it should fetch all notifications for qabot
+        //  fitter only from 0crat with the request for QA
+        //  review. Pares performer username from message
+        //  and submit a ticket for processing.
 
         final var review = new Thread(new ReviewJob(tickets));
         review.setName("review");
