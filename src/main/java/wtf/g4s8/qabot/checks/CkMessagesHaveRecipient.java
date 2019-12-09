@@ -94,10 +94,10 @@ public final class CkMessagesHaveRecipient implements RvCheck {
         ).intValue();
         final var smart = new Report.Smart(report);
         if (wrong == 0) {
-            smart.good(NAME, "all messages have recipient");
+            smart.good(CkMessagesHaveRecipient.NAME, "no messages without recipient");
         } else {
             smart.acceptable(
-                NAME,
+                CkMessagesHaveRecipient.NAME,
                 String.format(
                     "there are %d messages without recipient", wrong
                 )

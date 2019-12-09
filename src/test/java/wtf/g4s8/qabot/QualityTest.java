@@ -30,19 +30,28 @@ import wtf.g4s8.oot.SimpleTest;
 import wtf.g4s8.oot.TestCase;
 
 /**
- *
- * @since
+ * Test case for {@link Quality}.
+ * @since 1.0
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class QualityTest extends TestCase.Wrap {
 
+    /**
+     * Acceptable literal.
+     */
+    private static final String ACCEPTABLE = "acceptable";
+
+    /**
+     * Ctor.
+     */
     public QualityTest() {
         super(
             new SimpleTest<>(
                 "quality can be updated",
                 new Quality()
-                    .push("acceptable")
+                    .push(QualityTest.ACCEPTABLE)
                     .push("good"),
-                new TextHasString("acceptable")
+                new TextHasString(QualityTest.ACCEPTABLE)
             )
         );
     }

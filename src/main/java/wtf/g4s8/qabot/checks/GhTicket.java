@@ -50,7 +50,7 @@ public final class GhTicket implements Issue {
     /**
      * Fetch func.
      */
-    private static final BiFunc<Github, Ticket, Issue> fetch = new SolidBiFunc<>(
+    private static final BiFunc<Github, Ticket, Issue> FETCH = new SolidBiFunc<>(
         (ghb, tkt) -> {
             final String[] parts = tkt.coordinates().asString().split("#");
             Logger.info(GhTicket.class, "resolving ticket %s", tkt.coordinates().asString());
@@ -71,7 +71,7 @@ public final class GhTicket implements Issue {
      * @param tkt Ticket
      */
     public GhTicket(final Github ghb, final Ticket tkt) {
-        this.origin = () -> fetch.apply(ghb, tkt);
+        this.origin = () -> GhTicket.FETCH.apply(ghb, tkt);
     }
 
     @Override

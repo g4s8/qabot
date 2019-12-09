@@ -29,18 +29,24 @@ import com.jcabi.aspects.Tv;
 import com.jcabi.github.Github;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Logger;
 import org.cactoos.list.ListOf;
 
 /**
- *
- * @since
+ * Review daemon.
+ * @since 1.0
  */
 public final class ReviewJob implements Runnable {
 
+    /**
+     * Tickets.
+     */
     private final Tickets tks;
 
+    /**
+     * Ctor.
+     * @param tickets Tickets
+     */
     public ReviewJob(final Tickets tickets) {
         this.tks = tickets;
     }
@@ -51,26 +57,27 @@ public final class ReviewJob implements Runnable {
         while (!thread.isInterrupted()) {
             try {
                 this.job();
-            } catch (IOException e) {
+            } catch (final IOException err) {
                 final Logger logger = Logger.getLogger(Thread.currentThread().getName());
-                logger.warning(e.getMessage());
-                e.printStackTrace();
+                logger.warning(err.getMessage());
             }
             try {
                 Thread.sleep(Tv.HUNDRED);
-            } catch (InterruptedException iex) {
+            } catch (final InterruptedException iex) {
                 thread.interrupt();
             }
         }
     }
 
+    /**
+     * Job action.
+     * @throws IOException On failure
+     */
     private void job() throws IOException {
-        final Logger logger = Logger.getLogger(Thread.currentThread().getName());
         final Collection<Ticket> tickets = new ListOf<>(this.tks.take());
-        if (tickets.size() == 0) {
+        if (tickets.isEmpty()) {
             return;
         }
-        logger.info(String.format("received %d tickets", tickets.size()));
         final Github github = new GithubFrom();
         for (final Ticket ticket : tickets) {
             try (var report = new GhReport(github, ticket)) {

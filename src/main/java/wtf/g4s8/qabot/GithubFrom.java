@@ -48,6 +48,7 @@ import org.cactoos.scalar.Unchecked;
  * Github from environment variables.
  * @since 1.0
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class GithubFrom implements Github {
 
     /**

@@ -28,6 +28,8 @@ package wtf.g4s8.qabot;
 import com.jcabi.log.Logger;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.cactoos.list.ListOf;
@@ -38,6 +40,9 @@ import wtf.g4s8.qabot.tk.TkApp;
 /**
  * Entry point.
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
+ * @checkstyle MethodBodyCommentsCheck (500 lines)
+ * @checkstyle ExecutableStatementCountCheck (500 lines)
  */
 public final class Main implements Runnable {
 
@@ -77,39 +82,24 @@ public final class Main implements Runnable {
      * Main func.
      * @param args Arguments
      */
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         final Tickets.Simple tickets = new Tickets.Simple();
-
         final var thread = new Thread(new Main(new ListOf<>(args), tickets));
         thread.setDaemon(false);
         thread.setPriority(Thread.MAX_PRIORITY);
         thread.setName(Main.class.getSimpleName());
         thread.start();
-
-        final var notifications = new Thread(new NotificationsJob(tickets));
-        notifications.setName("notifications[d]");
-        notifications.setDaemon(true);
-        notifications.setPriority(Thread.NORM_PRIORITY);
         // @todo #1:30min Implement notifications daemon
         //  it should fetch all notifications for qabot
         //  fitter only from 0crat with the request for QA
         //  review. Pares performer username from message
         //  and submit a ticket for processing.
-
         final var review = new Thread(new ReviewJob(tickets));
         review.setName("review");
         review.setDaemon(false);
         review.setPriority(Thread.NORM_PRIORITY);
         review.start();
-
-        Runtime.getRuntime().addShutdownHook(
-            new Thread(() -> {
-                thread.interrupt();
-                review.interrupt();
-                notifications.interrupt();
-            })
-        );
-
+        new Shutdown(thread, review).register(Runtime.getRuntime());
         try {
             thread.join();
             review.join();
@@ -119,4 +109,46 @@ public final class Main implements Runnable {
         }
     }
 
+    /**
+     * Shutdown.
+     * @since 1.0
+     */
+    private static final class Shutdown implements Runnable {
+
+        /**
+         * Threads.
+         */
+        private final Collection<Thread> tds;
+
+        /**
+         * Ctor.
+         * @param threads Threads to stop
+         */
+        Shutdown(final Thread... threads) {
+            this(Arrays.asList(threads));
+        }
+
+        /**
+         * Ctor.
+         * @param threads Threads to terminat
+         */
+        Shutdown(final Collection<Thread> threads) {
+            this.tds = Collections.unmodifiableCollection(threads);
+        }
+
+        @Override
+        public void run() {
+            for (final Thread thread : this.tds) {
+                thread.interrupt();
+            }
+        }
+
+        /**
+         * Register itself as shutdown hook.
+         * @param runtime Runtime to register in
+         */
+        public void register(final Runtime runtime) {
+            runtime.addShutdownHook(new Thread(this));
+        }
+    }
 }

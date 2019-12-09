@@ -35,8 +35,8 @@ import wtf.g4s8.qabot.checks.CkPrIssues;
 import wtf.g4s8.qabot.checks.RvCheck;
 
 /**
- *
- * @since
+ * Verdict for ticket.
+ * @since 1.0
  */
 public final class VerdictFor implements Verdict {
 
@@ -45,8 +45,16 @@ public final class VerdictFor implements Verdict {
      */
     private final Iterable<RvCheck> checks;
 
+    /**
+     * Tickets.
+     */
     private final Ticket tkt;
 
+    /**
+     * Verdict for Github ticket.
+     * @param tkt Ticket
+     * @param ghb Github
+     */
     public VerdictFor(final Ticket tkt, final Github ghb) {
         this.tkt = tkt;
         this.checks = new ListOf<>(

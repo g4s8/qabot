@@ -37,6 +37,7 @@ public interface Report {
     /**
      * Report good quality.
      * @param name Check name
+     * @param quality Quality to report
      * @param details Check details
      * @throws IOException On failure
      */

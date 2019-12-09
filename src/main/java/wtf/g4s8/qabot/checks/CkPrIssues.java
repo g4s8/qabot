@@ -25,6 +25,7 @@
 
 package wtf.g4s8.qabot.checks;
 
+import com.jcabi.aspects.Tv;
 import com.jcabi.github.Github;
 import com.jcabi.github.Issue;
 import com.jcabi.github.Pull;
@@ -41,6 +42,7 @@ import wtf.g4s8.qabot.misc.IoText;
  * Check PR has at least 3 comments from assignee.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class CkPrIssues implements RvCheck {
 
@@ -77,14 +79,18 @@ public final class CkPrIssues implements RvCheck {
                 pull.comments().iterate(Collections.emptyMap())
             )
         ).intValue();
-        if (comments >= 3) {
-            smart.good(NAME, String.format("performer found %d issues in code review", comments));
+        if (comments >= Tv.THREE) {
+            smart.good(
+                CkPrIssues.NAME,
+                String.format("performer found %d issues in code review", comments)
+            );
         } else if (comments > 0) {
             smart.acceptable(
-                NAME, String.format("performer found only %d issues in code review", comments)
+                CkPrIssues.NAME,
+                String.format("performer found only %d issues in code review", comments)
             );
         } else {
-            smart.bad(NAME, "performer didn't find any issue in code review");
+            smart.bad(CkPrIssues.NAME, "performer didn't find any issue in code review");
         }
     }
 }

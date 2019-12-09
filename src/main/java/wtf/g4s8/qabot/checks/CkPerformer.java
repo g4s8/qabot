@@ -69,11 +69,11 @@ public final class CkPerformer implements RvCheck {
         final var smart = new Report.Smart(report);
         if (Objects.equals(performer, author)) {
             smart.acceptable(
-                NAME, String.format("performer and solver is %s", author)
+                CkPerformer.NAME, String.format("performer and solver is %s", author)
             );
         } else {
             smart.good(
-                NAME, String.format("author: %s, performer: %s", author, performer)
+                CkPerformer.NAME, String.format("author: %s, performer: %s", author, performer)
             );
         }
     }

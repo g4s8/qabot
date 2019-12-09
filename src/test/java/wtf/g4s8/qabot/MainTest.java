@@ -42,9 +42,15 @@ import wtf.g4s8.qabot.tk.TkNewTicket;
 /**
  * Tests entry point.
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
+@SuppressWarnings({"PMD.TestClassWithoutTestCases", "PMD.JUnit4TestShouldUseTestAnnotation"})
 public final class MainTest extends TestCase.Wrap {
 
+    /**
+     * Ctor.
+     * @throws Exception On failure
+     */
     private MainTest() throws Exception {
         super(
             new SequentialTests(
@@ -54,12 +60,22 @@ public final class MainTest extends TestCase.Wrap {
         );
     }
 
+    /**
+     * Tests entry point.
+     * @throws Exception On failure
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
     public static void test() throws Exception {
         try (FailingReport report = new FailingReport(new ConsoleReport())) {
             new MainTest().run(report);
         }
     }
 
+    /**
+     * New tickets take test.
+     * @return Test case
+     * @throws IOException On failure
+     */
     private static TestCase tkNewTicketsTest() throws IOException {
         final var store = new LinkedList<Ticket>();
         return new TkTest(

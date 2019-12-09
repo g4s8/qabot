@@ -34,47 +34,82 @@ import wtf.g4s8.oot.TestCase;
 import wtf.g4s8.oot.TestReport;
 
 /**
- *
- * @since
+ * Takes test.
+ * @since 1.0
  */
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 public final class TkTest implements TestCase {
 
-    private final Text name;
+    /**
+     * Test name.
+     */
+    private final Text nme;
 
+    /**
+     * Takes remote.
+     */
     private final FtRemote rmt;
 
+    /**
+     * Script to run.
+     */
     private final FtRemote.Script script;
 
-    public TkTest(final Take take, FtRemote.Script script) throws IOException {
+    /**
+     * Ctor.
+     * @param take Take to test
+     * @param script Script to run
+     * @throws IOException On failure
+     */
+    public TkTest(final Take take, final FtRemote.Script script) throws IOException {
         this(new ClassName(take), new FtRemote(take), script);
     }
 
+    /**
+     * Ctor.
+     * @param name Test name
+     * @param remote Remote front
+     * @param script Script to run
+     */
     public TkTest(final Text name, final FtRemote remote, final FtRemote.Script script) {
-        this.name = name;
+        this.nme = name;
         this.rmt = remote;
         this.script = script;
     }
 
     @Override
     public String name() {
-        return new UncheckedText(this.name).asString();
+        return new UncheckedText(this.nme).asString();
     }
 
     @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public void run(final TestReport report) throws IOException {
         try {
             this.rmt.exec(this.script);
+            // @checkstyle IllegalCatchCheck (1 line)
         } catch (final Exception err) {
             throw new IOException(err);
         }
         report.success(this);
     }
 
+    /**
+     * Class name as text.
+     * @since 1.0
+     */
     private static final class ClassName implements Text {
 
+        /**
+         * Object.
+         */
         private final Object object;
 
-        private ClassName(final Object object) {
+        /**
+         * Ctor.
+         * @param object Object to read the class
+         */
+        ClassName(final Object object) {
             this.object = object;
         }
 

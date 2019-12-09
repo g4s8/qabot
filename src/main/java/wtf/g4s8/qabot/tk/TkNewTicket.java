@@ -82,7 +82,7 @@ public final class TkNewTicket implements Take {
          * Ctor.
          * @param json JSON
          */
-        public JsonTicket(final JsonObject json) {
+        JsonTicket(final JsonObject json) {
             this(new JsonText(json, "id"), new JsonText(json, "performer"));
         }
 
@@ -91,7 +91,7 @@ public final class TkNewTicket implements Take {
          * @param coord Coordinates.
          * @param perf Performer
          */
-        public JsonTicket(final Text coord, final Text perf) {
+        JsonTicket(final Text coord, final Text perf) {
             this.coord = coord;
             this.perf = perf;
         }

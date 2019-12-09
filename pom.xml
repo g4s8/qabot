@@ -271,6 +271,7 @@
             <excludes combine.children="append">
               <exclude>findbugs:.*</exclude>
               <exclude>duplicatefinder:.*</exclude>
+              <exclude>dependencies:.*</exclude>
             </excludes>
           </configuration>
           <executions>

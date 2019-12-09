@@ -25,6 +25,7 @@
 
 package wtf.g4s8.qabot;
 
+import com.jcabi.aspects.Tv;
 import com.jcabi.github.Github;
 import java.io.Closeable;
 import java.io.IOException;
@@ -38,6 +39,9 @@ import wtf.g4s8.qabot.checks.GhTicket;
 /**
  * Report to Github ticket.
  * @since 1.0
+ * @todo #1:30min Links to agree or dispute are not implemented.
+ *  Create these links and automatically submit review on "agree"
+ *  or save the text on "dispute".
  */
 public final class GhReport implements Report, Closeable {
 
@@ -82,8 +86,9 @@ public final class GhReport implements Report, Closeable {
     }
 
     @Override
+    @SuppressWarnings({"PMD.ConsecutiveLiteralAppends", "PMD.InsufficientStringBufferDeclaration"})
     public void close() throws IOException {
-        final StringBuilder out = new StringBuilder();
+        final StringBuilder out = new StringBuilder(Tv.HUNDRED * 2);
         out.append(
             String.format(
                 "@%s it's automated quality report.\n",
@@ -98,9 +103,6 @@ public final class GhReport implements Report, Closeable {
                 .append(entry.getKey())
                 .append(" (").append(entry.getValue().getValue()).append(")\n");
         }
-        // @todo #1:30min Links to agree or dispute are not implemented.
-        //  Create these links and automatically submit review on "agree"
-        //  or save the text on "dispute".
         out.append("\n\nIf you agree with this review click `agree` link,")
             .append("if you don't agree follow `dispute` link.\n")
             .append("\n(bot is in experimental mode)\n\n//cc @g4s8");

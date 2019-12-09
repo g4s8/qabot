@@ -39,6 +39,7 @@ import wtf.g4s8.qabot.Ticket;
  * Check that a bug has solution provided.
  *
  * @since 1.0
+ * @checkstyle ClassDataAbstractionCouplingCheck (500 lines)
  */
 public final class CkBugHasSolution implements RvCheck {
 

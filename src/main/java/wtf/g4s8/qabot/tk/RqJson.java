@@ -67,14 +67,18 @@ public final class RqJson implements Scalar<JsonStructure> {
 
     @Override
     public JsonStructure value() throws IOException {
-        final MimeType mime = new MimeTypeOf(new RqHeaders.Smart(this.req).single("content-type"));
+        final MimeType mime = new MimeTypeOf(
+            new RqHeaders.Smart(this.req).single("content-type")
+        );
         if (!RqJson.isJson(mime)) {
             throw new HttpException(
                 HttpURLConnection.HTTP_UNSUPPORTED_TYPE,
                 String.format("application/json content expected but was %s", mime)
             );
         }
-        return Json.createReader(new InputStreamReader(this.req.body(), RqJson.charset(mime))).read();
+        return Json.createReader(
+            new InputStreamReader(this.req.body(), RqJson.charset(mime))
+        ).read();
     }
 
     /**

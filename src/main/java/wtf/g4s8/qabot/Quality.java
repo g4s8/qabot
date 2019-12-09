@@ -41,15 +41,24 @@ public final class Quality implements Text {
      * @since 1.0
      */
     private enum Values {
+        /**
+         * Good quality.
+         */
         GOOD,
+        /**
+         * Acceptable quality.
+         */
         ACCEPTABLE,
+        /**
+         * Bad quality.
+         */
         BAD
     }
 
     /**
      * Current state.
      */
-    private final AtomicReference<Values> quality;
+    private final AtomicReference<Values> state;
 
     /**
      * Ctor.
@@ -63,7 +72,7 @@ public final class Quality implements Text {
      * @param quality Initial state
      */
     Quality(final AtomicReference<Values> quality) {
-        this.quality = quality;
+        this.state = quality;
     }
 
     /**
@@ -80,21 +89,21 @@ public final class Quality implements Text {
      * </ul>
      * where * is any quality.
      * </p>
-     * @param quality New quality string
-     * @return self
+     * @param qstr New quality string
+     * @return Self
      */
-    public Quality push(final String quality) {
-        final Values change = Values.valueOf(quality.toUpperCase(Locale.US));
-        final Values current = this.quality.get();
+    public Quality push(final String qstr) {
+        final Values change = Values.valueOf(qstr.toUpperCase(Locale.US));
+        final Values current = this.state.get();
         if (change.compareTo(current) > 0) {
-            this.quality.set(change);
+            this.state.set(change);
         }
         return this;
     }
 
     @Override
     public String asString() {
-        return this.quality.get().name().toLowerCase(Locale.US);
+        return this.state.get().name().toLowerCase(Locale.US);
     }
 
     @Override

@@ -66,6 +66,7 @@ public interface Tickets extends Iterable<Ticket> {
 
     /**
      * Simple tickets in memory storage.
+     * @since 1.0
      */
     final class Simple implements Tickets {
 
@@ -81,6 +82,10 @@ public interface Tickets extends Iterable<Ticket> {
             this(new LinkedList<>());
         }
 
+        /**
+         * Ctor.
+         * @param store Tickets store
+         */
         public Simple(final List<Ticket> store) {
             this.store = store;
         }
