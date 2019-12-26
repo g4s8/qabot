@@ -29,6 +29,7 @@ import com.jcabi.github.Github;
 import java.io.IOException;
 import org.cactoos.list.ListOf;
 import wtf.g4s8.qabot.checks.CkBugHasSolution;
+import wtf.g4s8.qabot.checks.CkImpedimentHasReason;
 import wtf.g4s8.qabot.checks.CkMessagesHaveRecipient;
 import wtf.g4s8.qabot.checks.CkPerformer;
 import wtf.g4s8.qabot.checks.CkPrIssues;
@@ -61,7 +62,8 @@ public final class VerdictFor implements Verdict {
             new CkBugHasSolution(ghb),
             new CkPerformer(ghb),
             new CkMessagesHaveRecipient(ghb),
-            new CkPrIssues(ghb)
+            new CkPrIssues(ghb),
+            new CkImpedimentHasReason(ghb)
         );
     }
 
