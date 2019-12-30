@@ -56,7 +56,7 @@ public final class CkMessagesHaveRecipient implements RvCheck {
      * Username regex, see https://stackoverflow.com/a/30281147/1723695.
      */
     private static final Pattern PTN_MENTION =
-        Pattern.compile("(.*\\s)?@([a-z0-9](?:-?[a-z0-9]){0,38}).*", Pattern.DOTALL);
+        Pattern.compile("(.*\\s)?@([a-zA-Z0-9](?:-?[a-z0-9]){0,38}).*", Pattern.DOTALL);
 
     /**
      * Check name.

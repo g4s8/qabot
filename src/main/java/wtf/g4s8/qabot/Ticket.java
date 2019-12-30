@@ -27,6 +27,7 @@ package wtf.g4s8.qabot;
 
 import java.io.IOException;
 import org.cactoos.Text;
+import org.cactoos.text.TextOf;
 
 /**
  * Ticket to process.
@@ -50,4 +51,41 @@ public interface Ticket {
      * @throws IOException On failure
      */
     Text performer() throws IOException;
+
+    /**
+     * Fake ticket.
+     * @since 1.0
+     */
+    final class Fake implements Ticket {
+
+        /**
+         * Coordinates.
+         */
+        private final String coord;
+
+        /**
+         * Performer.
+         */
+        private final String perf;
+
+        /**
+         * Ctor.
+         * @param coord Fake coordinates
+         * @param perf Fake performer
+         */
+        public Fake(final String coord, final String perf) {
+            this.coord = coord;
+            this.perf = perf;
+        }
+
+        @Override
+        public Text coordinates() throws IOException {
+            return new TextOf(this.coord);
+        }
+
+        @Override
+        public Text performer() throws IOException {
+            return new TextOf(this.perf);
+        }
+    }
 }

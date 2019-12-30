@@ -55,7 +55,8 @@ public final class MainTest extends TestCase.Wrap {
         super(
             new SequentialTests(
                 MainTest.tkNewTicketsTest(),
-                new QualityTest()
+                new QualityTest(),
+                new CkMessagesHaveRecipientTest()
             )
         );
     }
