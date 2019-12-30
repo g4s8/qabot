@@ -26,6 +26,7 @@
 package wtf.g4s8.qabot;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * QA review report.
@@ -96,6 +97,31 @@ public interface Report {
          */
         public void bad(final String name, final String details) throws IOException {
             this.review(name, "bad", details);
+        }
+    }
+
+    /**
+     * Fake report.
+     * @since 1.0
+     */
+    final class Fake implements Report {
+
+        /**
+         * Reports output.
+         */
+        private final List<String[]> reports;
+
+        /**
+         * Ctor.
+         * @param reports Reports output
+         */
+        public Fake(final List<String[]> reports) {
+            this.reports = reports;
+        }
+
+        @Override
+        public void review(final String name, final String quality, final String details) {
+            this.reports.add(new String[]{name, quality, details});
         }
     }
 }
