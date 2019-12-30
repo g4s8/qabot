@@ -1,20 +1,24 @@
+---
 name: Release Heroku
-on: [push]
+"on":
+  push:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: registry.heroku.com/zqabot/web
-        username: _
-        password: ${{ secrets.HEROKU_DOCKER_TOKEN }}
-        registry: registry.heroku.com
-    - name: GitHub Action for Heroku
-      uses: actions/heroku@1.0.0
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_DOCKER_TOKEN }}
-      with:
-        args: container:release web -a zqabot
+      - uses: actions/checkout@v1
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: registry.heroku.com/zqabot/web
+          username: _
+          password: ${{ secrets.HEROKU_DOCKER_TOKEN }}
+          registry: registry.heroku.com
+      - name: GitHub Action for Heroku
+        uses: actions/heroku@1.0.0
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_DOCKER_TOKEN }}
+        with:
+          args: container:release web -a zqabot
