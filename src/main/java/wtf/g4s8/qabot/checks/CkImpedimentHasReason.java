@@ -55,7 +55,8 @@ public final class CkImpedimentHasReason implements RvCheck {
     /**
      * Bad quality impediment request.
      */
-    private static final Pattern BAD_WAIT = Pattern.compile("^@0crat wait(ing)?$");
+    private static final Pattern BAD_WAIT =
+        Pattern.compile("^@0crat wait(ing)?(\\s+#\\d+[.,;\\s]?)?$");
 
     /**
      * Github.
